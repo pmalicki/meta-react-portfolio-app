@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -12,28 +12,29 @@ import { Box, HStack } from "@chakra-ui/react";
 const socials = [
   {
     icon: faEnvelope,
-    url: "mailto: malickipiotr@yahoo.com",
+    url: "mailto: hello@example.com",
   },
   {
     icon: faGithub,
-    url: "https://github.com/pmalicki",
+    url: "https://github.com",
   },
   {
     icon: faLinkedin,
-    url: "https://www.linkedin.com/in/pmalicki1/",
+    url: "https://www.linkedin.com",
   },
   {
     icon: faMedium,
-    url: "https://medium.com/@pit.malicki",
+    url: "https://medium.com",
   },
   {
     icon: faStackOverflow,
-    url: "https://stackoverflow.com/users/32150898/piotr-malicki",
+    url: "https://stackoverflow.com",
   },
 ];
 
 const Header = () => {
-  const handleClick = (anchor) => () => {
+  const handleClick = (e, anchor) => () => {
+    e.preventDefault();
     const id = `${anchor}-section`;
     const element = document.getElementById(id);
     if (element) {
@@ -42,8 +43,38 @@ const Header = () => {
         block: "start",
       });
     }
+    
+    const urlHash = e.currentTarget.getAttribute('href');
+    window.history.pushState(null, "", `/${urlHash}`);
   };
 
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const debounce = useRef(false);
+
+  useEffect(() => {
+    const update = () => {
+      const current = window.scrollY;
+
+      if (current > lastScrollY.current) {
+        setIsVisible(false);
+      } else if (current < lastScrollY.current) {
+        setIsVisible(true);
+      }
+      lastScrollY.current = current;
+      debounce.current = false;
+    };
+
+    const onScroll = () => {
+      if (!debounce.current) {
+        window.requestAnimationFrame(update);
+        debounce.current = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <Box
@@ -51,11 +82,11 @@ const Header = () => {
       top={0}
       left={0}
       right={0}
-      translateY={0}
-      transitionProperty="transform"
-      transitionDuration=".3s"
-      transitionTimingFunction="ease-in-out"
+      transform={isVisible ? "translateY(0)" : "translateY(-110%)"}
+      transition="transform 220ms ease-in-out"
       backgroundColor="#18181b"
+      zIndex={100}
+      pointerEvents={isVisible ? "auto" : "none"}
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
@@ -83,24 +114,18 @@ const Header = () => {
           <nav>
             <HStack spacing={8}>
               <a
-                href="#projects-section"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleClick("projects")();
-                }}
+                href="#projects"
+                onClick={(e) => { handleClick(e, "projects")(); }}
                 style={{ cursor: "pointer" }}
               >
                 Projects
               </a>
               <a
-                href="#contactme-section"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleClick("contactme")();
-                }}
+                href="#contact-me"
+                onClick={(e) => { handleClick(e, "contactme")(); }}
                 style={{ cursor: "pointer" }}
               >
-                Contact
+                Contact Me
               </a>
             </HStack>
           </nav>

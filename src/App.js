@@ -6,8 +6,20 @@ import ContactMeSection from "./components/ContactMeSection";
 import Footer from "./components/Footer";
 import { AlertProvider } from "./context/alertContext";
 import Alert from "./components/Alert";
+import { useEffect } from 'react';
 
 function App() {
+    useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const id = (hash === 'contact-me') ? 'contactme-section' : `${hash}-section`;
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
+    }
+  }, []);
+
   return (
     <ChakraProvider>
       <AlertProvider>
