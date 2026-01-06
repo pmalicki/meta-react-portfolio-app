@@ -12,23 +12,23 @@ import { Box, HStack } from "@chakra-ui/react";
 const socials = [
   {
     icon: faEnvelope,
-    url: "mailto: hello@example.com",
+    url: "mailto: malickipiotr@yahoo.com",
   },
   {
     icon: faGithub,
-    url: "https://github.com",
+    url: "https://github.com/pmalicki",
   },
   {
     icon: faLinkedin,
-    url: "https://www.linkedin.com",
+    url: "https://www.linkedin.com/in/pmalicki1/",
   },
   {
     icon: faMedium,
-    url: "https://medium.com",
+    url: "https://medium.com/@pit.malicki",
   },
   {
     icon: faStackOverflow,
-    url: "https://stackoverflow.com",
+    url: "https://stackoverflow.com/users/32150898/piotr-malicki",
   },
 ];
 
@@ -43,6 +43,7 @@ const Header = () => {
       });
     }
   };
+
 
   return (
     <Box
@@ -64,11 +65,43 @@ const Header = () => {
           alignItems="center"
         >
           <nav>
-            {/* Add social media links based on the `socials` data */}
+            <HStack spacing={4}>
+              {socials.map((s, idx) => (
+                <a
+                  key={idx}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`social-link-${idx}`}
+                  style={{ color: "inherit" }}
+                >
+                  <FontAwesomeIcon icon={s.icon} size="2x" />
+                </a>
+              ))}
+            </HStack>
           </nav>
           <nav>
             <HStack spacing={8}>
-              {/* Add links to Projects and Contact me section */}
+              <a
+                href="#projects-section"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick("projects")();
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                Projects
+              </a>
+              <a
+                href="#contactme-section"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick("contactme")();
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                Contact
+              </a>
             </HStack>
           </nav>
         </HStack>
