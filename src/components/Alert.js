@@ -21,9 +21,10 @@ function Alert() {
       isOpen={isOpen}
       leastDestructiveRef={cancelRef}
       onClose={onClose}
+      motionPreset='slideInTop'
     >
       <AlertDialogOverlay>
-        <AlertDialogContent py={4} backgroundColor={isSuccess ? '#81C784' : '#FF8A65'}>
+        <AlertDialogContent py={4} mx={{ base: 4, md: 'auto' }} maxW="lg" backgroundColor={isSuccess ? '#81C784' : '#FF8A65'} borderRadius="md">
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             {isSuccess ? 'All good!' : 'Oops!'}
           </AlertDialogHeader>

@@ -19,12 +19,7 @@ export const AlertProvider = ({ children }) => {
     setState({ isOpen: false, type: '', message: '' });
   }, []);
 
-  // Auto-close alert after 3 seconds when opened
-  useEffect(() => {
-    if (!state.isOpen) return;
-    const t = setTimeout(onClose, 3000);
-    return () => clearTimeout(t);
-  }, [state.isOpen, onClose]);
+
 
   return (
     <AlertContext.Provider
