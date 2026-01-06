@@ -90,13 +90,13 @@ const Header = () => {
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
-          px={16}
-          py={4}
+          px={{ base: 4, md: 16 }}
+          py={{ base: 2, md: 4 }}
           justifyContent="space-between"
           alignItems="center"
         >
           <nav>
-            <HStack spacing={4}>
+            <HStack spacing={{ base: 4, md: 6 }} alignItems="center">
               {socials.map((s, idx) => (
                 <a
                   key={idx}
@@ -106,24 +106,26 @@ const Header = () => {
                   aria-label={`social-link-${idx}`}
                   style={{ color: "inherit" }}
                 >
-                  <FontAwesomeIcon icon={s.icon} size="2x" />
+                  <Box as="span" fontSize={{ base: "20px", md: "32px" }} >
+                    <FontAwesomeIcon icon={s.icon} />
+                  </Box>
                 </a>
               ))}
             </HStack>
           </nav>
           <nav>
-            <HStack spacing={8}>
+            <HStack spacing={{ base: 4, md: 8 }}>
               <a
                 href="#projects"
                 onClick={(e) => { handleClick(e, "projects")(); }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", fontSize: '14px' }}
               >
                 Projects
               </a>
               <a
                 href="#contact-me"
                 onClick={(e) => { handleClick(e, "contactme")(); }}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", fontSize: '14px' }}
               >
                 Contact Me
               </a>
